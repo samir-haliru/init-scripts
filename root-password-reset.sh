@@ -1,6 +1,9 @@
 #!/bin/bash
 set -x
 
+# New password: Set a one time password here. You will be forced to change it on the first login
+NEW_PASSWORD="upc10ud"
+
 # Check hostname before proceeding.
 if [ "$(hostname)" != "temp-password-reset" ]; then
     echo "Not a temporary password reset server. Exiting."
@@ -27,41 +30,36 @@ EOF
 systemctl enable password-reset.service
 
 # Now create the password reset script
-cat << 'EOF' > /usr/local/bin/password-reset.sh
+cat << EOF > /usr/local/bin/password-reset.sh
 #!/bin/bash
 # Ensure logging directory exists
 mkdir -p /var/log/upcloud
 
 # Create comprehensive logging function
 log() {
-    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" | tee -a /var/log/upcloud/password-reset-startup.log
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] \$*" | tee -a /var/log/upcloud/password-reset-startup.log
 }
 
 log "Password Reset Script Started"
 
 # Function to detect OS and reset the password accordingly
 reset_password() {
-    local target_dir=$1
-    local new_pass="upc10ud"
+    local target_dir=\$1
     
     # Try to detect OS
-    if [ -f "${target_dir}/etc/redhat-release" ]; then
+    if [ -f "\${target_dir}/etc/redhat-release" ]; then
         log "CentOS/RHEL system detected"
         
-		# Set new root password using chpasswd
-		log "Setting new root password using chpasswd"
-		echo "root:${new_pass}" | chroot ${target_dir} /bin/bash -c "chpasswd"
-		
-		# Verify root account is unlocked and password is set
-		if chroot ${target_dir} /bin/bash -c "grep '^root:[!*]' /etc/shadow"; then
-		    log "ERROR: Root account still appears to be locked"
-		    return 1
-		else
-		    log "Root account successfully unlocked and password set"
-		fi
+        # Set new root password using chpasswd
+        log "Setting new root password using chpasswd"
+        echo "root:${NEW_PASSWORD}" | chroot \${target_dir} /bin/bash -c "chpasswd"
+        
+        # Force password expiration on first login
+        log "Forcing password expiration on first login"
+        chroot \${target_dir} /bin/bash -c "chage -d 0 root"
         
         # Verify root account is unlocked and password is set
-        if chroot ${target_dir} /bin/bash -c "grep '^root:[!*]' /etc/shadow"; then
+        if chroot \${target_dir} /bin/bash -c "grep '^root:[!*]' /etc/shadow"; then
             log "ERROR: Root account still appears to be locked"
             return 1
         else
@@ -69,16 +67,20 @@ reset_password() {
         fi
         
         # Handle SELinux
-        if [ -f "${target_dir}/etc/selinux/config" ]; then
+        if [ -f "\${target_dir}/etc/selinux/config" ]; then
             log "SELinux detected, ensuring autorelabel on next boot"
-            touch "${target_dir}/.autorelabel"
+            touch "\${target_dir}/.autorelabel"
         fi
     else
         log "Debian/Ubuntu system detected (or other)"
-        echo "root:${new_pass}" | chroot ${target_dir} /bin/bash -c "chpasswd"
+        echo "root:${NEW_PASSWORD}" | chroot \${target_dir} /bin/bash -c "chpasswd"
+        
+        # Force password expiration on first login
+        log "Forcing password expiration on first login"
+        chroot \${target_dir} /bin/bash -c "chage -d 0 root"
     fi
     
-    return $?
+    return \$?
 }
 
 # Debug: List block devices
