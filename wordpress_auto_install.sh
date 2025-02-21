@@ -51,23 +51,23 @@ fi
 ### Begin process logging
 
 # --- SYSTEM UPDATE ---
-{
-    echo "[STEP 1] Updating and upgrading the system..."
-} >> $LOG_FILE
-
-if [ "$OS_TYPE" == "debian" ]; then
-    export DEBIAN_FRONTEND=noninteractive
-    $PKG_MANAGER update -y >> /tmp/init-script.log
-    $PKG_MANAGER -y upgrade >> /tmp/init-script.log
-else
-    $PKG_MANAGER -y update >> /tmp/init-script.log
-    $PKG_MANAGER -y upgrade >> /tmp/init-script.log
-fi
-
-{
-    echo "[STEP 1] System update and upgrade completed."
-    echo ""
-} >> $LOG_FILE
+#{
+#    echo "[STEP 1] Updating and upgrading the system..."
+#} >> $LOG_FILE
+#
+#if [ "$OS_TYPE" == "debian" ]; then
+#    export DEBIAN_FRONTEND=noninteractive
+#    $PKG_MANAGER update -y >> /tmp/init-script.log
+#    $PKG_MANAGER -y upgrade >> /tmp/init-script.log
+#else
+#    $PKG_MANAGER -y update >> /tmp/init-script.log
+#    $PKG_MANAGER -y upgrade >> /tmp/init-script.log
+#fi
+#
+#{
+#    echo "[STEP 1] System update and upgrade completed."
+#    echo ""
+#} >> $LOG_FILE
 
 # --- INSTALL APACHE ---
 {
@@ -282,7 +282,7 @@ SITE_URL="http://$SITE_IP"
     echo "    Admin URL: $ADMIN_URL"
     echo ""
     echo "Admin Username: $WP_ADMIN_USERNAME"
-    echo "Admin Password: $WP_ADMIN_PASSWORD"
+    echo "Admin Password: (redacted)"
     echo ""
     echo "==============================="
 } >> $LOG_FILE
