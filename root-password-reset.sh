@@ -48,13 +48,17 @@ reset_password() {
     if [ -f "${target_dir}/etc/redhat-release" ]; then
         log "CentOS/RHEL system detected"
         
-        # Unlock root account
-        log "Unlocking root account"
-        chroot ${target_dir} /bin/bash -c "passwd -u root"
-        
-        # Set new root password using chpasswd
-        log "Setting new root password using chpasswd"
-        echo "root:${new_pass}" | chroot ${target_dir} /bin/bash -c "chpasswd"
+		# Set new root password using chpasswd
+		log "Setting new root password using chpasswd"
+		echo "root:${new_pass}" | chroot ${target_dir} /bin/bash -c "chpasswd"
+		
+		# Verify root account is unlocked and password is set
+		if chroot ${target_dir} /bin/bash -c "grep '^root:[!*]' /etc/shadow"; then
+		    log "ERROR: Root account still appears to be locked"
+		    return 1
+		else
+		    log "Root account successfully unlocked and password set"
+		fi
         
         # Verify root account is unlocked and password is set
         if chroot ${target_dir} /bin/bash -c "grep '^root:[!*]' /etc/shadow"; then
