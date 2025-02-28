@@ -140,6 +140,8 @@ fi
     echo ""
     echo "Coolify is now accessible at:"
     echo "    http://$SERVER_IP:8000"
+    echo ""
+    echo "This will be displayed to users when they log in."
     echo "==============================="
 } | tee -a $LOG_FILE $DETAILED_LOG
 
