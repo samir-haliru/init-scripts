@@ -6,7 +6,7 @@ This script automates the deployment of [Coolify](https://coolify.io/) on a new 
 1. Deploy a new Cloud Server in the UpCloud control panel using the initialisation script:
    ```
    #!/bin/bash
-   curl -s https://raw.githubusercontent.com/your-username/init-scripts/main/coolify/coolify_auto_install.sh | bash
+   curl -s https://raw.githubusercontent.com/samir-haliru/init-scripts/refs/heads/main/coolify/coolify_auto_install.sh | bash
    ```
 
 2. Once deployment is complete, log into the server via SSH.
