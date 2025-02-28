@@ -1,4 +1,5 @@
 # Beszel Hub deployment guide on UpCloud
+This script automates the deployment of a [Beszel](https://beszel.dev/) Hub on a new UpCloud Server. It installs all necessary components, configures the initial HTTP access, and prepares the environment for optional HTTPS configuration with a custom domain. 
 
 ## Initial setup
 
