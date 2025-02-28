@@ -18,13 +18,16 @@
    🎉 Beszel Hub Installation Complete!
    Beszel Hub is now accessible at:
        http://<IP-ADDRESS>:8090
+   
    IMPORTANT: To configure HTTPS with a domain name:
    1. Set up DNS records to point your domain to this server's IP: <IP-ADDRESS>
    2. Wait for DNS changes to propagate (may take up to 24-48 hours)
    3. Run the domain setup script:
        /opt/beszel/setup-domain.sh your-domain.com
+   
    To check service status: systemctl status beszel-hub.service
    To view logs: journalctl -u beszel-hub.service
+   
    Official Documentation: https://beszel.dev/guide/getting-started
    ===============================
    ```
