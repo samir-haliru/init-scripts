@@ -1,4 +1,4 @@
-# Beszel Hub deployment guide
+# Beszel Hub deployment guide on UpCloud
 
 ## Initial setup
 
@@ -69,7 +69,7 @@ You can change the domain for your Beszel Hub installation at any time by runnin
 ```
 
 ## Adding a new server to monitor
-
+![image](https://github.com/user-attachments/assets/8ae7395c-d7ec-4731-8b06-e1aa502ded54)
 1. Log in to the Beszel Hub dashboard.
 2. Click "Add System" in the top right corner.
 3. Switch to the 'Binary' tab.
@@ -81,3 +81,6 @@ You can change the domain for your Beszel Hub installation at any time by runnin
 8. Paste the copied command and press Enter.
 9. Type `y` when prompted to enable automatic daily updates for the beszel-agent.
 10. Return to your Beszel Hub dashboard—the newly added server should now appear as "up" with updated statistics.
+
+![image](https://github.com/user-attachments/assets/f1c36a8b-dfe2-4c92-8e0f-56a25f586e86)
+
