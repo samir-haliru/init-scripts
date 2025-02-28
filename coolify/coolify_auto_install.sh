@@ -15,6 +15,30 @@ DETAILED_LOG="/var/log/coolify-install-detailed.log"
     echo ""
 } | tee -a $LOG_FILE $DETAILED_LOG
 
+# Create initial "Installing" MOTD
+create_installing_motd() {
+    cat > /etc/update-motd.d/91-coolify-installing << 'EOF'
+#!/bin/bash
+echo "----------------------------------------"
+echo -e "\033[0;33m📦 Coolify installation in progress...\033[0m"
+echo "----------------------------------------"
+echo ""
+echo "The automated installation of Coolify is currently running."
+echo "This typically takes 5-10 minutes depending on your server specs."
+echo ""
+echo "To check installation progress:"
+echo "  cat /var/log/coolify-install.log"
+echo ""
+echo "To view detailed logs:"
+echo "  cat /var/log/coolify-install-detailed.log"
+echo "----------------------------------------"
+EOF
+    chmod +x /etc/update-motd.d/91-coolify-installing
+}
+
+# Create initial "Installing" MOTD right away
+create_installing_motd
+
 # Create a function to handle errors
 handle_error() {
     {
@@ -71,6 +95,8 @@ fi
     echo ""
 } | tee -a $LOG_FILE $DETAILED_LOG
 
+# Note: We'll keep the "Installing" MOTD until we verify Coolify is running
+
 # Step 2: Check if Coolify is running
 {
     echo "[STEP 2] Verifying Coolify is running..."
@@ -96,27 +122,32 @@ else
     handle_error "Coolify service verification"
 fi
 
-# Step 3: Create a simplified MOTD
+# Step 3: Create final "Installed" MOTD
 {
-    echo "[STEP 3] Creating Message of the Day for Coolify..."
+    echo "[STEP 3] Creating final Message of the Day for Coolify..."
 } | tee -a $LOG_FILE $DETAILED_LOG
 
 SERVER_IP=$(get_server_ip)
 
-# Create the MOTD file
-cat > /etc/update-motd.d/99-coolify-installed << EOF
+# Create the final MOTD file
+cat > /etc/update-motd.d/92-coolify-installed << EOF
 #!/bin/bash
 echo "----------------------------------------"
-echo -e "\033[0;32mCoolify is installed and running!\033[0m"
+echo -e "\033[0;32m✅ Coolify is installed and running!\033[0m"
+echo "----------------------------------------"
+echo ""
 echo "Access your Coolify instance at: http://$SERVER_IP:8000"
 echo ""
-echo "Installation logs:"
+echo "Installation logs (if needed):"
 echo "- /var/log/coolify-install.log (summary)"
 echo "- /var/log/coolify-install-detailed.log (detailed)"
 echo "----------------------------------------"
 EOF
 
-chmod +x /etc/update-motd.d/99-coolify-installed
+chmod +x /etc/update-motd.d/92-coolify-installed
+
+# Remove the "Installing" MOTD
+rm -f /etc/update-motd.d/91-coolify-installing
 
 # Ensure the MOTD is displayed by updating motd if needed
 if [ -f /etc/default/motd-news ]; then
