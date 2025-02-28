@@ -1,0 +1,80 @@
+# Beszel Hub deployment guide
+
+## Initial setup
+
+1. Deploy a new Cloud Server in the UpCloud control panel using the initialisation script.
+   ```
+   #!/bin/bash
+   curl -s https://raw.githubusercontent.com/samir-haliru/init-scripts/main/beszel/beszel_auto_install.sh | bash
+   ```
+2. Once deployment is complete, log into the server via SSH.
+3. Run this command to check the installation logs:
+   ```
+   cat /root/beszel-installation.log
+   ```
+4. You should see output confirming successful installation:
+   ```
+   ===============================
+   🎉 Beszel Hub Installation Complete!
+   Beszel Hub is now accessible at:
+       http://<IP-ADDRESS>:8090
+   IMPORTANT: To configure HTTPS with a domain name:
+   1. Set up DNS records to point your domain to this server's IP: <IP-ADDRESS>
+   2. Wait for DNS changes to propagate (may take up to 24-48 hours)
+   3. Run the domain setup script:
+       /opt/beszel/setup-domain.sh your-domain.com
+   To check service status: systemctl status beszel-hub.service
+   To view logs: journalctl -u beszel-hub.service
+   Official Documentation: https://beszel.dev/guide/getting-started
+   ===============================
+   ```
+
+## Accessing Beszel Hub
+
+You can immediately access the Beszel Hub dashboard by visiting:
+```
+http://<YOUR-SERVER-IP>:8090
+```
+
+## Setting up HTTPS with a custom domain
+
+1. Create DNS records for your domain pointing to your server's IP address:
+   - Add an A record: `yourdomain.com` → `<YOUR-SERVER-IP>`
+2. Wait for DNS changes to propagate (typically takes between a few minutes to 48 hours).
+3. Run the domain setup script:
+   ```
+   /opt/beszel/setup-domain.sh yourdomain.com
+   ```
+4. After successful completion, Beszel Hub will be accessible via HTTPS:
+   ```
+   https://yourdomain.com
+   ```
+5. To view domain setup logs, run:
+   ```
+   cat /root/beszel-domain-setup.log
+   ```
+
+### What happens if domain setup fails
+
+If your domain hasn't fully propagated or doesn't point to your server when you run the setup script, you'll receive a warning message. You'll then be prompted to either cancel the operation or continue despite the warning.
+
+### Changing to a new domain
+
+You can change the domain for your Beszel Hub installation at any time by running:
+```
+/opt/beszel/setup-domain.sh yournewdomain.com
+```
+
+## Adding a new server to monitor
+
+1. Log in to the Beszel Hub dashboard.
+2. Click "Add System" in the top right corner.
+3. Switch to the 'Binary' tab.
+4. Replace `<SERVER NAME>` with a descriptive name for your server.
+5. Replace `<IP-ADDRESS>` with the IPv4 address of the server you want to monitor.
+   - For enhanced security, consider using the server's private IPv4 utility address or SDN network address.
+6. Copy the generated Linux command to your clipboard and click "Add system".
+7. Log into the server you want to monitor.
+8. Paste the copied command and press Enter.
+9. Type `y` when prompted to enable automatic daily updates for the beszel-agent.
+10. Return to your Beszel Hub dashboard—the newly added server should now appear as "up" with updated statistics.
