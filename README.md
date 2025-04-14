@@ -1,4 +1,4 @@
-# Ready-to-use UpCloud initialzation scripts
+# Ready-to-use UpCloud initialization scripts
 A collection of ready-to-use initialization scripts that can be used with new UpCloud server deployments
 
 Initialization scripts (init-scripts) are automation scripts that execute only once - during a cloud server's very first boot after deployment. The scripts use regular shell script syntax but differ in their execution context as they run automatically during initial server startup.
