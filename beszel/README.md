@@ -15,17 +15,17 @@ This init script automates the deployment of a [Beszel](https://beszel.dev/) Hub
    ```
 4. You should see output confirming successful installation:
    ```
-   [root@beszel-centos ~]# tail -f /var/log/beszel-install.log
-   Created symlink /etc/systemd/system/multi-user.target.wants/beszel.service → /etc/systemd/system/beszel.service.
-   [2025-03-19 08:06:34] [INFO] Docker service configured and started
-   [2025-03-19 08:06:34] [INFO] Creating domain setup script...
-   [2025-03-19 08:06:34] [INFO] Domain setup script created at /opt/beszel/setup-domain.sh
-   [2025-03-19 08:06:35] [SUCCESS] Installation complete!
-   [2025-03-19 08:06:35] [INFO] Beszel Hub is running on port 8090
-   [2025-03-19 08:06:35] [INFO] Firewall configured to allow connections to port 8090
-   [2025-03-19 08:06:35] [INFO] Beszel Hub is available at: http://12.34.56.78:8090
-   [2025-03-19 08:06:35] [INFO] To configure HTTPS: /opt/beszel/setup-domain.sh yourdomain.com (will configure ports 80/443)
-   [2025-03-19 08:06:35] [INFO] To update Beszel: docker pull henrygd/beszel:latest && systemctl restart beszel
+   [INFO] ========================================================
+   [INFO]  Beszel Installation Complete!
+   [INFO] ========================================================
+   [INFO]
+   [INFO]  Beszel Hub is running in a Docker container.
+   [INFO]  You can access it directly via the server's IP address:
+   [INFO]  -> http://94.237.79.133:8090  (HTTP only)
+   [INFO]
+   [INFO]  Firewall Status (Port 8090 for direct access):
+   [WARN]  -> UFW is installed but INACTIVE. Rule for port 8090 is not enforced.
+   [WARN]     Consider running 'sudo ufw enable' after logging in if you need the firewall.
    ```
 
 ## Accessing Beszel Hub
