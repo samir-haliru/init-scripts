@@ -26,6 +26,44 @@ This init script automates the deployment of a [Beszel](https://beszel.dev/) Hub
    [INFO]  Firewall Status (Port 8090 for direct access):
    [WARN]  -> UFW is installed but INACTIVE. Rule for port 8090 is not enforced.
    [WARN]     Consider running 'sudo ufw enable' after logging in if you need the firewall.
+   [INFO] ========================================================
+   [INFO]  OPTIONAL: Configure a Domain Name (HTTPS Access)
+   [INFO] ========================================================
+   [INFO]  A script has been created to help you configure Nginx
+   [INFO]  as a reverse proxy and obtain a free SSL certificate
+   [INFO]  from Let's Encrypt using Certbot.
+   [INFO]
+   [INFO]  Prerequisites:
+   [INFO]  1. You need a registered domain name.
+   [INFO]  2. Point your domain's DNS A record to this server's IP: 94.237.79.133
+   [INFO]  3. Wait for DNS propagation (this can take anywhere from a few minutes to several hours).
+   [INFO]
+   [INFO]  How to run the setup script:
+    ...
+    ...
+   [INFO] ========================================================
+   [INFO]  Managing the Beszel Service
+   [INFO] ========================================================
+   [INFO]  - Status: sudo systemctl status beszel
+   [INFO]  - Stop:   sudo systemctl stop beszel
+   [INFO]  - Start:  sudo systemctl start beszel
+   [INFO]  - Restart:sudo systemctl restart beszel
+   [INFO]  - Logs:   sudo journalctl -u beszel -f
+   [INFO]
+   [INFO] ========================================================
+   [INFO]  Updating Beszel
+   [INFO] ========================================================
+   [INFO]  1. Pull the latest Docker image:
+   [INFO]     sudo docker pull henrygd/beszel:latest
+   [INFO]  2. Restart the service to use the new image:
+   [INFO]     sudo systemctl restart beszel
+   [INFO]
+   [INFO] ========================================================
+   [INFO]  Log Files
+   [INFO] ========================================================
+   [INFO]  - This installation script log: /var/log/beszel-install.log
+   [INFO]  - Domain setup script log (if run): /var/log/beszel-domain-setup.log
+   [INFO]  ========================================================
    ```
 
 ## Accessing Beszel Hub
