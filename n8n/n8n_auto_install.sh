@@ -181,6 +181,7 @@ ExecStart=/usr/bin/docker run \\
     -p $N8N_PORT:5678 \\
     -v $DOCKER_VOLUME_NAME:/home/node/.n8n \\
     -e TZ="$SYSTEM_TZ" \\
+    -e N8N_SECURE_COOKIE=false \\
     $DOCKER_IMAGE
 
 # Optional: Add other environment variables here if needed, e.g.:
