@@ -1,6 +1,6 @@
 # n8n Auto-Install Script
 
-A comprehensive initialization script for automatically deploying n8n workflow automation on Debian/Ubuntu servers. This script sets up n8n using Docker with systemd service management, optional domain configuration with SSL, and comprehensive logging.
+An initialization script for automatically deploying n8n workflow automation on Debian/Ubuntu servers. This script sets up n8n using Docker with systemd service management, optional domain configuration with SSL, and comprehensive logging.
 
 ## What this script does
 
@@ -14,7 +14,7 @@ A comprehensive initialization script for automatically deploying n8n workflow a
 ## Prerequisites
 
 - **Operating system**: Debian or Ubuntu server
-- **Root access**: Script must run as root (typically via cloud-init)
+- **Root access**: Script must run as root
 - **Internet connection**: Required for downloading packages and Docker images
 - **Basic server specifications**: 1GB RAM minimum, 2GB+ recommended
 
@@ -22,9 +22,9 @@ A comprehensive initialization script for automatically deploying n8n workflow a
 
 ### Using cloud-init (recommended)
 
-1. **Copy the script** (`n8n_auto_install.sh`) to your cloud provider's initialization script field
+1. **Copy the script** (`n8n_auto_install.sh`) to the initialization script field in the UpCloud control panel
 2. **Deploy your server** - the script will run automatically during first boot
-3. **Wait for completion** - typically takes 5-10 minutes depending on server specs
+3. **Wait for completion** - takes 5-10 minutes depending on server specs
 4. **Access n8n** via `http://YOUR-SERVER-IP:5678`
 
 ### Manual execution
@@ -33,7 +33,7 @@ If running manually on an existing server:
 
 ```bash
 # Download the script
-wget https://your-script-location/n8n_auto_install.sh
+wget https://script-location/n8n_auto_install.sh
 
 # Make executable
 chmod +x n8n_auto_install.sh
@@ -128,7 +128,7 @@ n8n data is stored in a Docker volume called `n8n_data`. This includes:
 - Settings
 - Execution history
 
-### Backup considerations
+### Backup
 
 ```bash
 # Backup n8n data volume
@@ -169,7 +169,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart n8n
 ```
 
-## Security considerations
+## Security
 
 ### Firewall configuration
 
