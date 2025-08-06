@@ -63,12 +63,21 @@ The script creates an optional domain configuration script at `/opt/n8n/setup-do
 
 ### Running domain setup
 
-```bash
-# For production certificate
-sudo bash /opt/n8n/setup-domain.sh your-domain.com
+**For most users (production certificate)**
 
-# For testing (staging certificate)
+```bash
+sudo bash /opt/n8n/setup-domain.sh your-domain.com
+```
+
+**For testing or avoiding rate limits (optional)**
+
+```bash
+# Get staging certificate for testing
 sudo bash /opt/n8n/setup-domain.sh your-domain.com --staging
+
+# If staging works, delete it and get production certificate
+sudo certbot delete --cert-name your-domain.com
+sudo bash /opt/n8n/setup-domain.sh your-domain.com
 ```
 
 **What the domain script does:**
