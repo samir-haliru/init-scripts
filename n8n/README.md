@@ -33,7 +33,7 @@ If running manually on an existing server:
 
 ```bash
 # Download the script
-wget https://script-location/n8n_auto_install.sh
+wget https://raw.githubusercontent.com/samir-haliru/init-scripts/main/n8n/n8n_auto_install.sh
 
 # Make executable
 chmod +x n8n_auto_install.sh
