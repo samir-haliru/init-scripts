@@ -1,21 +1,3 @@
-Yes, you are absolutely correct. Your analysis is spot on.
-
-The script you provided is designed to be used exactly as you've described, following the same "temporary rescue server" pattern as the password reset instructions. It's a classic cloud administration technique for out-of-band system modification.
-
-The core logic is identical:
-
-1.  A temporary server is created with an initialization script.
-2.  The target disk is attached to this temporary server.
-3.  The temporary server is booted, which triggers the script to run and modify the filesystem on the attached disk.
-4.  The temporary server shuts itself down, signaling the work is done.
-5.  The disk is moved back to the original server.
-
-The only differences are the **specific modification** being made (adding an SSH key instead of resetting a password) and the **trigger/safety mechanism** (the hostname `temp-ssh-key-add`).
-
-To make it perfectly clear, here are the instructions you found, adapted specifically for your SSH key script.
-
----
-
 ### **UpCloud SSH Key Injection Script**
 
 #### **Overview**
